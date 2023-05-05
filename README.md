@@ -259,7 +259,7 @@ LIMIT 3;
 
 ![e5cbeefa-2340-4b6e-9159-faf9059a3749](https://user-images.githubusercontent.com/90588689/236502343-6b89390e-ae2d-424a-925e-46e988359962.jpg)
 
-Q3 Hard Question: Create a stream with the average number of vegetables consumed per day for each nutritional awareness level. We use 'nutritional_check'  and 'veggies_day' columns to find the average number of vegetables consumed per day for each nutritional awareness level.
+Q3 Hard Question: What are the average number of vegetables consumed per day for each nutritional awareness level. We use 'nutritional_check'  and 'veggies_day' columns to find the average number of vegetables consumed per day for each nutritional awareness level.
 
 ```sql
 SELECT
