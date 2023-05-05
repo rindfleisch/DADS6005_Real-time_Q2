@@ -206,6 +206,22 @@ Result
 
 ![output](https://user-images.githubusercontent.com/82042221/236473448-36b477e6-3393-46cd-8a5a-5886ef750704.jpg)
 
+### Export file from PosgreSQL
+Q1 Easy Question: What is the average number of times college students consume vegetables per week?
+To answer this question, you can use simple statistics by calculating the mean value of the 'veggies_day' column in the dataset.
+```sql
+
+```
+Q2 Medium Question: What are the top 3 most popular cuisines among college students who have cooking experience? For this question, you can perform a join operation between the 'cook' column (students with cooking experience) and the 'fav_cuisine' column (favorite cuisine of the students). Then, use aggregation functions to find the top 3 most popular cuisines.
+```sql
+
+```
+Q3 Hard Question: Is there a correlation between a student's GPA and their frequency of eating breakfast? To answer this question, you need to analyze the relationship between the 'GPA' column and the 'breakfast' column. You can use Pearson's correlation coefficient or other statistical methods to determine the correlation between these variables, ultimately providing an analytical insight into the relationship between GPA and breakfast consumption.
+
+```sql
+
+```
+
 
 
 ### KSQL MAPPING/CLEANSING (quiz02_raw -> quiz02_analyze)
