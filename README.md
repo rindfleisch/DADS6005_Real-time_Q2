@@ -213,14 +213,14 @@ Result
 
 ### Export file from PosgreSQL
 Q1 Easy Question: What is the average number of times college students consume vegetables per week?
-To answer this question, you can use simple statistics by calculating the mean value of the 'veggies_day' column in the dataset.
+To answer this question, we use simple statistics by calculating the mean value of the 'veggies_day' column in the dataset.
 ```sql
 SELECT AVG(veggies_day) FROM AS2_raw;
 ```
 ![4584f49a-29c6-4fbb-a94f-22700bd661c9](https://user-images.githubusercontent.com/90588689/236502387-11e103a6-07f5-4ec0-82ee-e47bd87c3c52.jpg)
 
 
-Q2 Medium Question: What are the top 3 most popular cuisines among college students who have cooking experience? For this question, you can perform a join operation between the 'cook' column (students with cooking experience) and the 'fav_cuisine' column (favorite cuisine of the students). Then, use aggregation functions to find the top 3 most popular cuisines.
+Q2 Medium Question: What are the top 3 most popular cuisines among college students? For this question, we perform selection from  the 'fav_cuisine_coded' column (favorite cuisine of the students). Then, use aggregation functions to find the top 3 most popular cuisines.
 ```sql
 SELECT
 
@@ -259,7 +259,7 @@ LIMIT 3;
 
 ![e5cbeefa-2340-4b6e-9159-faf9059a3749](https://user-images.githubusercontent.com/90588689/236502343-6b89390e-ae2d-424a-925e-46e988359962.jpg)
 
-Q3 Hard Question: Create a stream with the average number of vegetables consumed per day for each nutritional awareness level
+Q3 Hard Question: Create a stream with the average number of vegetables consumed per day for each nutritional awareness level. We use 'nutritional_check'  and 'veggies_day' columns to find the average number of vegetables consumed per day for each nutritional awareness level.
 
 ```sql
 SELECT
