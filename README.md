@@ -220,7 +220,7 @@ SELECT AVG(veggies_day) FROM AS2_raw;
 ![4584f49a-29c6-4fbb-a94f-22700bd661c9](https://user-images.githubusercontent.com/90588689/236502387-11e103a6-07f5-4ec0-82ee-e47bd87c3c52.jpg)
 
 
-Q2 Medium Question: What are the top 3 most popular cuisines among college students? For this question, we perform selection from  the 'fav_cuisine_coded' column (favorite cuisine of the students). Then, use aggregation functions to find the top 3 most popular cuisines.
+Q2 Medium Question: What are the most popular cuisines among college students respectively ? For this question, we perform selection from  the 'fav_cuisine_coded' column (favorite cuisine of the students). Then, use aggregation functions to find the most popular cuisines.
 ```sql
 SELECT
 
