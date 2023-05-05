@@ -310,6 +310,12 @@ CREATE SINK CONNECTOR `elasticsearch-sink-all-01` WITH(
 ```
 ## Visualize
 
-![image](https://user-images.githubusercontent.com/22583786/236402795-6bab83ab-25b9-48f2-aefd-6b8b8abfa559.png)
+Q2
+
+![e62fada8-90de-4dc4-bd41-70a69674d504](https://user-images.githubusercontent.com/90588689/236518496-308f9a1b-b149-4e93-a98c-59aa794be8d0.jpg)
+
+Q3
+
+![204582a0-72da-4804-b8f5-bbfe6743b866](https://user-images.githubusercontent.com/90588689/236518562-f4abdd28-81c6-415e-bd17-4ad9ed215e1e.jpg)
 
 
