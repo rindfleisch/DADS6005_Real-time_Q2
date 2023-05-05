@@ -210,12 +210,50 @@ Result
 Q1 Easy Question: What is the average number of times college students consume vegetables per week?
 To answer this question, you can use simple statistics by calculating the mean value of the 'veggies_day' column in the dataset.
 ```sql
-
+SELECT AVG(veggies_day) FROM quiz02_raw;
 ```
+![4584f49a-29c6-4fbb-a94f-22700bd661c9](https://user-images.githubusercontent.com/90588689/236502387-11e103a6-07f5-4ec0-82ee-e47bd87c3c52.jpg)
+
+
 Q2 Medium Question: What are the top 3 most popular cuisines among college students who have cooking experience? For this question, you can perform a join operation between the 'cook' column (students with cooking experience) and the 'fav_cuisine' column (favorite cuisine of the students). Then, use aggregation functions to find the top 3 most popular cuisines.
 ```sql
+SELECT
 
+    CASE
+
+        WHEN fav_cuisine_coded = 1 THEN 'Italian/French/Greek'
+
+        WHEN fav_cuisine_coded = 2 THEN 'Spanish/Mexican'
+
+        WHEN fav_cuisine_coded = 3 THEN 'Arabic/Turkish'
+
+        WHEN fav_cuisine_coded = 4 THEN 'Asian/Chinese/Thai/Nepal'
+
+        WHEN fav_cuisine_coded = 5 THEN 'American'
+
+        WHEN fav_cuisine_coded = 6 THEN 'African'
+
+        WHEN fav_cuisine_coded = 7 THEN 'Jamaican'
+
+        WHEN fav_cuisine_coded = 8 THEN 'Indian'
+
+        ELSE 'None'
+
+    END AS fav_cuisine,
+
+    COUNT(*) AS count
+
+FROM quiz02_raw
+
+GROUP BY fav_cuisine_coded
+
+ORDER BY count DESC
+
+LIMIT 3;
 ```
+
+![e5cbeefa-2340-4b6e-9159-faf9059a3749](https://user-images.githubusercontent.com/90588689/236502343-6b89390e-ae2d-424a-925e-46e988359962.jpg)
+
 Q3 Hard Question: Is there a correlation between a student's GPA and their frequency of eating breakfast? To answer this question, you need to analyze the relationship between the 'GPA' column and the 'breakfast' column. You can use Pearson's correlation coefficient or other statistical methods to determine the correlation between these variables, ultimately providing an analytical insight into the relationship between GPA and breakfast consumption.
 
 ```sql
