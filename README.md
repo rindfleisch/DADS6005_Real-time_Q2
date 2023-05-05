@@ -1,5 +1,10 @@
 # DADS6005_Real-time_Q2
 
+1 ภูมิ เจวประเสริฐพัทธ์ 6420412004          
+2 ก้องปภณ สังข์รุ่ง 6420412001
+3 กฤติน ค้าไกล 6420412012
+4 สิรพงศ์ บุญพจน์ศิริ 6420412007
+
 
 # Steps of command
 
@@ -307,22 +312,4 @@ CREATE SINK CONNECTOR `elasticsearch-sink-all-01` WITH(
 
 ![image](https://user-images.githubusercontent.com/22583786/236402795-6bab83ab-25b9-48f2-aefd-6b8b8abfa559.png)
 
-## Note
 
-Show connector information
-```sql
-DESCRIBE connector `postgres_test02`;
-```
-![image](https://user-images.githubusercontent.com/22583786/235336731-9b15db7b-00c0-438a-9bdf-106a9eebf5a7.png)
-
-Show stream information
-```sql
-DESCRIBE quiz02_raw;
-```
-![image](https://user-images.githubusercontent.com/22583786/235336810-400fd581-7f07-4a17-8270-1b527e11f09c.png)
-
-
-Delete connector
-```sql
-drop connector `postgres_test01`;
-```
