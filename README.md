@@ -17,20 +17,20 @@
 -	User: root
 -	Pass: secret
 2.Open DBeaver -> PostgreSQL connect
--	Database: quiz02_dev
+-	Database: AS2_dev
 -	User: root
 -	Pass: secret
 
 Open SQL Script
 
 ```sql
-CREATE DATABASE quiz02_raw;
-CREATE DATABASE quiz02_dev;
+CREATE DATABASE AS2_raw;
+CREATE DATABASE AS2_dev;
 ```
 
-In SQL- quiz02_dev
+In SQL- AS2_dev
 ```sql
-SELECT * from quiz02_raw;   ---> This shows empty table
+SELECT * from AS2_raw;   ---> This shows empty table
 ```
 
 ### Install psycopg2 (postgresql client)
@@ -40,7 +40,7 @@ conda install -c anaconda psycopg2
 
 ### Create Table (PostgreSQL) using create_table.py.
 ```shell
-python create_table.py food_coded.csv quiz02_raw
+python create_table.py food_coded.csv AS2_raw
 ```
 
 ### Kafka. 
@@ -48,24 +48,24 @@ python create_table.py food_coded.csv quiz02_raw
 #### Create Kafka topic
 
 ```shell
-docker exec -it kafka.quiz02 /bin/bash
+docker exec -it kafka.AS2 /bin/bash
 ```
 ```shell
-kafka-topics --bootstrap-server kafka.quiz02:9092 --create --topic quiz02_raw
+kafka-topics --bootstrap-server kafka.AS2:9092 --create --topic AS2_raw
 ```
 ```shell
-kafka-topics --bootstrap-server kafka:9092 --topic quiz02_persist --create --partitions 2 --replication-factor 1
+kafka-topics --bootstrap-server kafka:9092 --topic AS2_persist --create --partitions 2 --replication-factor 1
 ```
 ### KSQL
 
 #### ksqldb-cli
 Run bash to ksqldb-cli.
 ```shell
-docker exec -it ksqldb-cli.quiz02 /bin/bash
+docker exec -it ksqldb-cli.AS2 /bin/bash
 ```
 Run ksql-cli
 ```shell
-ksql http://ksqldb-server.quiz02:8088
+ksql http://ksqldb-server.AS2:8088
 ```
 
 Set offset to begin (Option)
@@ -74,9 +74,9 @@ SET 'auto.offset.reset' = 'earliest';
 ```
 
 Create Stream
-Raw Zone: create_ksqldb_quiz02_raw_table.sql
+Raw Zone: create_ksqldb_AS2_raw_table.sql
 ```sql
-CREATE STREAM quiz02_raw (
+CREATE STREAM AS2_raw (
 index int,
 GPA varchar,
 Gender int,
@@ -138,21 +138,21 @@ type_sports varchar,
 veggies_day int,
 vitamins int,
 waffle_calories int,
-weight varchar )  WITH (KAFKA_TOPIC='quiz02_raw',VALUE_FORMAT='AVRO');
+weight varchar )  WITH (KAFKA_TOPIC='AS2_raw',VALUE_FORMAT='AVRO');
 
 ```
 
 ####
-Persist Zone: create_ksqldb_quiz02_persist_table.sql
+Persist Zone: create_ksqldb_AS2_persist_table.sql
 ```sql
-CREATE STREAM quiz02_persist
+CREATE STREAM AS2_persist
 with (
-    KAFKA_TOPIC = 'quiz02_persist',
+    KAFKA_TOPIC = 'AS2_persist',
     VALUE_FORMAT = 'AVRO',
     PARTITIONS = 2
 ) as SELECT index,breakfast,coffee,calories_day,drink,eating_changes_coded,exercise,fries,soup,nutritional_check,employment,fav_food,income,sports,
 veggies_day,indian_food,Italian_food,persian_food,thai_food,vitamins,self_perception_weight,weight
-FROM quiz02_raw 
+FROM AS2_raw 
 where calories_day >= 1.0
 EMIT CHANGES;
 ```
@@ -162,11 +162,11 @@ Create source.
 ```sql
 ksql> CREATE SOURCE CONNECTOR `postgres-dev01` WITH(
     "connector.class"='io.confluent.connect.jdbc.JdbcSourceConnector',
-    "connection.url"='jdbc:postgresql://postgres:5432/quiz02_dev?user=root&password=secret',
+    "connection.url"='jdbc:postgresql://postgres:5432/AS2_dev?user=root&password=secret',
     "mode"='incrementing',
     "incrementing.column.name"='index',
     "topic.prefix"='',
-    "table.whitelist"='quiz02_raw',
+    "table.whitelist"='AS2_raw',
     "key"='index');
 ```
 
@@ -179,9 +179,9 @@ ksql> CREATE SINK CONNECTOR `elasticsearch-sink-map01` WITH(
     "connection.password"='',
     "batch.size"='1',
     "write.method"='insert',
-    "topics"='quiz02_all',
+    "topics"='AS2_all',
     "type.name"='changes',
-    "value.converter.schema.registry.url" ='http://schema-registry.quiz02:8081',
+    "value.converter.schema.registry.url" ='http://schema-registry.AS2:8081',
     "value.converter" = 'io.confluent.connect.avro.AvroConverter',
     "key.ignore" = 'true',
     "key"='index');
@@ -190,11 +190,11 @@ ksql> CREATE SINK CONNECTOR `elasticsearch-sink-map01` WITH(
 
 
 
-#### Verify quiz02_raw
+#### Verify AS2_raw
 ```sql
 SELECT index,breakfast,coffee,calories_day,drink,eating_changes_coded,exercise,fries,soup,nutritional_check,employment,fav_food,income,sports,
 veggies_day,indian_food,Italian_food,persian_food,thai_food,vitamins,self_perception_weight,weight
-FROM quiz02_raw
+FROM AS2_raw
 EMIT CHANGES;
 ```
 ![output](https://user-images.githubusercontent.com/82042221/236472100-a83a0c22-5a0c-4e9c-ba42-9ed6c821baa6.jpg)
@@ -204,7 +204,7 @@ EMIT CHANGES;
 $ python insert_data.py  $file_input $table_name
 
 ```shell
-python insert_data.py food_coded.csv quiz02_raw
+python insert_data.py food_coded.csv AS2_raw
 ```
 
 Result
@@ -215,7 +215,7 @@ Result
 Q1 Easy Question: What is the average number of times college students consume vegetables per week?
 To answer this question, you can use simple statistics by calculating the mean value of the 'veggies_day' column in the dataset.
 ```sql
-SELECT AVG(veggies_day) FROM quiz02_raw;
+SELECT AVG(veggies_day) FROM AS2_raw;
 ```
 ![4584f49a-29c6-4fbb-a94f-22700bd661c9](https://user-images.githubusercontent.com/90588689/236502387-11e103a6-07f5-4ec0-82ee-e47bd87c3c52.jpg)
 
@@ -248,7 +248,7 @@ SELECT
 
     COUNT(*) AS count
 
-FROM quiz02_raw
+FROM AS2_raw
 
 GROUP BY fav_cuisine_coded
 
@@ -282,7 +282,7 @@ SELECT
 
     AVG(veggies_day) AS avg_veggies_per_day
 
-FROM quiz02_raw
+FROM AS2_raw
 
 GROUP BY nutritional_check;
 ```
@@ -301,9 +301,9 @@ CREATE SINK CONNECTOR `elasticsearch-sink-all-01` WITH(
     "connection.password"='',
     "batch.size"='1',
     "write.method"='insert',
-    "topics"='quiz02_all',
+    "topics"='AS2_all',
     "type.name"='changes',
-    "value.converter.schema.registry.url" ='http://schema-registry.quiz02:8081',
+    "value.converter.schema.registry.url" ='http://schema-registry.AS2:8081',
     "value.converter" = 'io.confluent.connect.avro.AvroConverter',
     "key.ignore" = 'true',
     "key"='index');
